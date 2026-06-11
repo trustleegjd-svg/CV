@@ -1,0 +1,1413 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lý Tính Nhiệm - IT Portfolio</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-color: #0d6efd;
+            --secondary-color: #00f2fe;
+            --dark-bg: #030712;
+            --card-bg: #111827;
+            --nav-bg: rgba(10, 15, 29, 0.85);
+            --text-main: #f9fafb;
+            --text-muted: #cbd5e1;
+            --border-color: rgba(255, 255, 255, 0.06);
+            --gradient-accent: linear-gradient(135deg, #3b82f6 0%, #00f2fe 100%);
+        }
+
+        [data-theme="light"] {
+            --primary-color: #0d6efd;
+            --secondary-color: #0284c7;
+            --dark-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --nav-bg: rgba(248, 250, 252, 0.85);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --gradient-accent: linear-gradient(135deg, #0d6efd 0%, #0284c7 100%);
+        }
+
+        .text-muted,
+        [class*="text-muted"] {
+            color: var(--text-muted) !important;
+            --bs-text-opacity: 1 !important;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        .navbar-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 700;
+        }
+
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--dark-bg);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(13, 110, 253, 0.2);
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .navbar {
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            padding: 10px 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-link {
+            color: var(--text-main) !important;
+            font-weight: 500;
+            margin: 0 10px;
+            position: relative;
+            opacity: 0.85;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            opacity: 1;
+            color: var(--primary-color) !important;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .about-img-container img {
+            object-fit: cover;
+            width: 100%;
+            max-height: 450px;
+            transition: transform 0.3s ease;
+        }
+
+        .about-img-container img:hover {
+            transform: scale(1.02);
+        }
+
+        .style-border {
+            border-color: var(--border-color);
+            opacity: 1;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            padding-top: 120px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .hero-bg-shapes .shape {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.15;
+        }
+
+        .shape-1 {
+            top: 20%;
+            left: 10%;
+            width: 300px;
+            height: 300px;
+            background: var(--primary-color);
+            border-radius: 50%;
+        }
+
+        .shape-2 {
+            bottom: 20%;
+            right: 10%;
+            width: 350px;
+            height: 350px;
+            background: var(--secondary-color);
+            border-radius: 50%;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .gradient-text {
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 30px;
+        }
+
+        .btn-custom {
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .btn-gradient {
+            background: var(--gradient-accent);
+            color: white !important;
+            border: none;
+        }
+
+        .btn-gradient:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(13, 110, 253, 0.3);
+        }
+
+        .btn-outline-custom {
+            border: 2px solid var(--primary-color);
+            color: var(--text-main);
+            background: transparent;
+        }
+
+        .btn-outline-custom:hover {
+            background: var(--gradient-accent);
+            color: white !important;
+            border-color: transparent;
+            transform: translateY(-3px);
+        }
+
+        .avatar-wrapper {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            margin: 0 auto;
+        }
+
+        .avatar-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            background: var(--gradient-accent);
+            animation: morph 8s ease-in-out infinite;
+            z-index: 1;
+        }
+
+        .avatar-inner {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            background: var(--card-bg);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: morph 8s ease-in-out infinite;
+            z-index: 2;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .avatar-inner i {
+            font-size: 6rem;
+            color: var(--primary-color);
+        }
+
+        @keyframes morph {
+            0% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+
+            50% {
+                border-radius: 70% 30% 30% 70% / 70% 70% 30% 30%;
+            }
+
+            100% {
+                border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            }
+        }
+
+        section {
+            padding: 100px 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            position: relative;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+
+        .custom-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            height: 100%;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-card-1 {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .custom-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+            border-color: rgba(13, 110, 253, 0.3);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 40px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: -37px;
+            top: 5px;
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: var(--dark-bg);
+            border: 4px solid var(--primary-color);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover .timeline-marker {
+            background: var(--secondary-color);
+            transform: scale(1.2);
+        }
+
+        .timeline-info {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .skill-badge {
+            background: rgba(13, 110, 253, 0.1);
+            color: var(--primary-color);
+            border: 1px solid rgba(13, 110, 253, 0.2);
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-weight: 500;
+            display: inline-block;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            background: var(--gradient-accent);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .progress-wrapper {
+            margin-bottom: 25px;
+        }
+
+        .progress {
+            height: 8px;
+            background-color: var(--border-color);
+            border-radius: 4px;
+            overflow: visible;
+        }
+
+        .progress-bar {
+            background: var(--gradient-accent);
+            border-radius: 4px;
+            position: relative;
+            overflow: visible;
+        }
+
+        .floating-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            z-index: 1000;
+        }
+
+        .control-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            color: var(--primary-color);
+        }
+
+        .contact-icon-box {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: rgba(13, 110, 253, 0.1);
+            color: var(--primary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.3rem;
+            margin-right: 15px;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+
+        .custom-card:hover .contact-icon-box {
+            background: var(--gradient-accent);
+            color: white;
+        }
+
+        .lang-en {
+            display: none;
+        }
+
+        #experience .timeline ul {
+            list-style: none !important;
+            padding-left: 0 !important;
+            margin-left: 0 !important;
+        }
+
+        #experience .timeline ul li {
+            position: relative !important;
+            padding-left: 20px !important;
+            margin-bottom: 10px !important;
+            display: block !important;
+        }
+
+        #experience .timeline ul li::before {
+            content: "•";
+            position: absolute !important;
+            left: 0 !important;
+            top: 0 !important;
+            line-height: 1.5 !important;
+            color: var(--text-muted) !important;
+            font-size: 1.2rem !important;
+        }
+
+        @media (max-width: 991.98px) {
+            section {
+                padding: 60px 0;
+            }
+            .hero-section {
+                padding-top: 100px;
+                min-height: auto;
+                padding-bottom: 60px;
+            }
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            .avatar-wrapper {
+                width: 240px;
+                height: 240px;
+                margin-top: 30px;
+            }
+            .avatar-inner i {
+                font-size: 4.5rem;
+            }
+            .section-title {
+                font-size: 2rem;
+                margin-bottom: 40px;
+            }
+            .navbar-collapse {
+                background: var(--card-bg);
+                padding: 20px;
+                border-radius: 15px;
+                margin-top: 15px;
+                border: 1px solid var(--border-color);
+            }
+            .nav-link {
+                margin: 10px 0;
+            }
+            .nav-link::after {
+                display: none;
+            }
+        }
+
+        @media (max-width: 575.98px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+            .hero-subtitle-typed {
+                font-size: 1.5rem !important;
+            }
+            .custom-card {
+                padding: 20px;
+            }
+            .floating-controls {
+                bottom: 15px;
+                right: 15px;
+            }
+            .control-btn {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg fixed-top">
+        <div class="container">
+            <a class="navbar-brand text-primary" href="#">
+                <span class="gradient-text">&lt; LTN.IT /&gt;</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#hero">
+                            <span class="lang-vi">Trang chủ</span>
+                            <span class="lang-en">Home</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">
+                            <span class="lang-vi">Giới thiệu</span>
+                            <span class="lang-en">About</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">
+                            <span class="lang-vi">Kỹ năng</span>
+                            <span class="lang-en">Skills</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#experience">
+                            <span class="lang-vi">Kinh nghiệm</span>
+                            <span class="lang-en">Experience</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#awards">
+                            <span class="lang-vi">Giải thưởng</span>
+                            <span class="lang-en">Awards</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">
+                            <span class="lang-vi">Liên hệ</span>
+                            <span class="lang-en">Contact</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="floating-controls">
+        <button class="control-btn" id="langToggle" title="Switch Language">
+            <span style="font-weight: bold; font-size: 0.85rem;">EN</span>
+        </button>
+        <button class="control-btn" id="themeToggle" title="Toggle Theme">
+            <i class="fas fa-moon"></i>
+        </button>
+    </div>
+
+    <section id="hero" class="hero-section">
+        <div class="hero-bg-shapes">
+            <div class="shape shape-1"></div>
+            <div class="shape shape-2"></div>
+        </div>
+        <div class="container">
+            <div class="row align-items-center g-4 g-lg-5 text-center text-lg-start">
+                <div class="col-lg-7" data-aos="fade-right">
+                    <h5 class="text-primary uppercase tracking-wider mb-3">
+                        <span class="lang-vi">XIN CHÀO, TÔI LÀ</span>
+                        <span class="lang-en">HELLO, I AM</span>
+                    </h5>
+                    <h1 class="hero-title">
+                        <span class="gradient-text">Lý Tính Nhiệm</span><br>
+                        <span class="hero-subtitle-typed" style="font-size: 2.2rem; font-weight: 500;"></span>
+                    </h1>
+                    <p class="lead text-muted mb-4">
+                        <span class="lang-vi">Chuyên viên IT Support / System & Network Administrator tương lai với nền tảng kỹ thuật vững vàng, sẵn sàng tối ưu hóa hạ tầng công nghệ và giải quyết mọi sự cố hệ thống doanh nghiệp phức tạp.</span>
+                        <span class="lang-en">An IT Support Specialist & Future System/Network Administrator with robust technical foundations, ready to optimize technology infrastructures and solve complex corporate system challenges.</span>
+                    </p>
+                    <div class="d-flex flex-wrap gap-3 justify-content-center justify-content-lg-start">
+                        <a href="#contact" class="btn btn-custom btn-gradient">
+                            <span class="lang-vi">Liên Hệ Ngay</span>
+                            <span class="lang-en">Get In Touch</span>
+                        </a>
+                        <a href="#experience" class="btn btn-custom btn-outline-custom">
+                            <span class="lang-vi">Xem Kinh Nghiệm</span>
+                            <span class="lang-en">View Experience</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5 d-flex justify-content-center" data-aos="fade-left">
+                    <div class="avatar-wrapper">
+                        <div class="avatar-border"></div>
+                        <div class="avatar-inner">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">
+                <span class="lang-vi">Giới Thiệu Bản Thân</span>
+                <span class="lang-en">About Me</span>
+            </h2>
+
+            <div class="row g-4 g-lg-5 align-items-center mb-5">
+                <div class="col-lg-4 text-center" data-aos="fade-right">
+                    <div class="about-img-container mx-auto" style="max-width: 320px;">
+                        <img src="https://via.placeholder.com/400x500" alt="Lý Tính Nhiệm" class="img-fluid rounded-4 shadow-lg border border-secondary">
+                    </div>
+                </div>
+                <div class="col-lg-8" data-aos="fade-left">
+                    <h3 class="text-primary mb-4 fw-bold text-center text-lg-start">
+                        <span class="lang-vi">Hồ Sơ Cá Nhân</span>
+                        <span class="lang-en">Personal Profile</span>
+                    </h3>
+                    <div class="row g-3">
+                        <div class="col-sm-6">
+                            <p class="mb-2 text-muted"><i class="fas fa-user text-primary me-2"></i> <strong><span class="lang-vi">Họ và tên:</span><span class="lang-en">Full Name:</span></strong> Lý Tính Nhiệm</p>
+                            <p class="mb-2 text-muted"><i class="fas fa-birthday-cake text-primary me-2"></i> <strong><span class="lang-vi">Ngày sinh:</span><span class="lang-en">Date of Birth:</span></strong> 08/02/2004</p>
+                            <p class="mb-2 text-muted"><i class="fas fa-map-marker-alt text-primary me-2"></i> <strong><span class="lang-vi">Quê quán:</span><span class="lang-en">Hometown:</span></strong> Cần Thơ</p>
+                            <p class="mb-2 text-muted"><i class="fas fa-home text-primary me-2"></i> <strong><span class="lang-vi">Hiện tại:</span><span class="lang-en">Current Location:</span></strong> TP. Hồ Chí Minh</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="mb-2 text-muted"><i class="fas fa-university text-primary me-2"></i> <strong><span class="lang-vi">Học vấn:</span><span class="lang-en">Education:</span></strong> FPT Polytechnic</p>
+                            <p class="mb-2 text-muted"><i class="fas fa-graduation-cap text-primary me-2"></i> <strong><span class="lang-vi">Chuyên ngành:</span><span class="lang-en">Major:</span></strong> <span class="lang-vi">Công nghệ thông tin</span><span class="lang-en">Information Technology</span></p>
+                            <p class="mb-2 text-muted"><i class="fas fa-star text-primary me-2"></i> <strong>GPA:</strong> 3.92 / 4.0</p>
+                            <p class="mb-2 text-muted"><i class="fas fa-award text-primary me-2"></i> <strong><span class="lang-vi">Xếp loại:</span><span class="lang-en">Classification:</span></strong> <span class="badge bg-success text-white fw-bold"><span class="lang-vi">Xuất Sắc</span><span class="lang-en">Excellent</span></span></p>
+                        </div>
+                    </div>
+                    <hr class="my-4 style-border">
+                    <p class="text-muted leading-relaxed text-center text-lg-start">
+                        <span class="lang-vi">Là một người trẻ đầy nhiệt huyết, tôi luôn đối mặt với khó khăn bằng tinh thần trách nhiệm và khả năng học hỏi công nghệ mới rất nhanh nhạy. Dù tuổi đời còn trẻ, tôi không phải là người mới bước vào nghề nhờ quá trình liên tục cọ xát và tích lũy kinh nghiệm thực tế qua các dự án phối hợp cùng doanh nghiệp. Tôi mong muốn mang năng lượng tích cực và sự tập trung này để đóng góp cho sự ổn định hệ thống của tổ chức.</span>
+                        <span class="lang-en">As a highly enthusiastic tech professional, I embrace technical challenges with accountability and a fast learning curve. Despite my young age, I am by no means a novice to the industry, having continuously sharpened my skills through hands-on corporate environments. I look forward to bringing this proactive drive to ensure seamless organizational system operations.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-5" data-aos="fade-up">
+                <h3 class="text-primary mb-4 fw-bold text-center">
+                    <span class="lang-vi">Định Hướng & Mục Tiêu</span>
+                    <span class="lang-en">Career Objectives</span>
+                </h3>
+                <div class="row g-4 align-items-stretch">
+                    <div class="col-md-6" data-aos="fade-right">
+                        <div class="custom-card d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="contact-icon-box"><i class="fas fa-bullseye"></i></div>
+                                    <h4 class="mb-0">
+                                        <span class="lang-vi">Định hướng Ngắn hạn</span>
+                                        <span class="lang-en">Short-term Focus</span>
+                                    </h4>
+                                </div>
+                                <p class="text-muted leading-relaxed mb-0">
+                                    <span class="lang-vi">Mong muốn phát triển chuyên sâu trong lĩnh vực IT Support/Helpdesk, nâng cao khả năng quản trị hệ thống chuyên nghiệp, nâng cấp quản lý mạng LAN, camera, vận hành trơn tru các phần mềm nội bộ và thắt chặt bảo mật thiết bị đầu cuối toàn doanh nghiệp.</span>
+                                    <span class="lang-en">Desire to deeply develop expertise in IT Support/Helpdesk field, enhancing professional system administration capabilities, optimizing LAN network management, surveillance systems, smoothly running in-house software, and tightening enterprise endpoint security.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6" data-aos="fade-left">
+                        <div class="custom-card d-flex flex-column justify-content-between">
+                            <div>
+                                <div class="d-flex align-items-center mb-4">
+                                    <div class="contact-icon-box"><i class="fas fa-rocket"></i></div>
+                                    <h4 class="mb-0">
+                                        <span class="lang-vi">Tầm nhìn Dài hạn</span>
+                                        <span class="lang-en">Long-term Vision</span>
+                                    </h4>
+                                </div>
+                                <p class="text-muted leading-relaxed mb-0">
+                                    <span class="lang-vi">Kiên trì tích lũy kiến thức thực tế, nâng cấp chứng chỉ chuyên môn quốc tế để vươn lên đảm nhận xuất sắc vai trò Quản trị viên Hệ thống (System Administrator) hoặc Quản trị viên Mạng (Network Administrator) toàn diện trong 2–3 năm tới.</span>
+                                    <span class="lang-en">Persistently accumulating hands-on knowledge and international certificates to excel into a well-rounded System Administrator or Network Administrator role within the next 2-3 years.</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">
+                <span class="lang-vi">Năng Lực Chuyên Môn</span>
+                <span class="lang-en">Core Competencies</span>
+            </h2>
+            <div class="row g-4">
+
+                <div class="col-lg-6" data-aos="fade-right">
+                    <div class="custom-card d-flex flex-column h-100">
+                        <h4 class="mb-4 text-primary">
+                            <span class="lang-vi"><i class="fas fa-tools me-2"></i>Kỹ Thuật Hệ Thống & Hạ Tầng</span>
+                            <span class="lang-en"><i class="fas fa-tools me-2"></i>Infrastructure & Systems Engineering</span>
+                        </h4>
+
+                        <div class="mb-4">
+                            <h5 class="text-secondary fw-bold" style="font-size: 1.05rem;">
+                                <span class="lang-vi">Quản Trị Hệ Thống & Helpdesk</span>
+                                <span class="lang-en">System Administration & Helpdesk</span>
+                            </h5>
+                            <div class="d-flex flex-wrap mt-2">
+                                <span class="skill-badge">Hardware & Software Troubleshooting</span>
+                                <span class="skill-badge">Windows/Windows Server</span>
+                                <span class="skill-badge">Office 365 Admin</span>
+                                <span class="skill-badge">Active Directory / Endpoints</span>
+                                <span class="skill-badge">Enterprise ERP & Accounting Apps</span>
+                                <span class="skill-badge">Data Backup & Recovery</span>
+                                <span class="skill-badge">Remote Support Tools</span>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <h5 class="text-secondary fw-bold" style="font-size: 1.05rem;">
+                                <span class="lang-vi">Hạ Tầng Mạng & Thiết Bị An Ninh</span>
+                                <span class="lang-en">Network & Security Infrastructure</span>
+                            </h5>
+                            <div class="d-flex flex-wrap mt-2">
+                                <span class="skill-badge">LAN / WAN / Wi-Fi Admin</span>
+                                <span class="skill-badge">Router & Switch Configuration</span>
+                                <span class="skill-badge">VLAN Segmentations</span>
+                                <span class="skill-badge">CCTV Surveillance Systems</span>
+                                <span class="skill-badge">Time Attendance Devices</span>
+                                <span class="skill-badge">Network Printers & Shared Resources</span>
+                                <span class="skill-badge">Kaspersky Endpoint Security</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-auto pt-2">
+                            <h5 class="text-muted fw-bold" style="font-size: 0.95rem;">
+                                <span class="lang-vi"><i class="fas fa-code me-2"></i>Công Nghệ Lập Trình (Phụ trợ)</span>
+                                <span class="lang-en"><i class="fas fa-code me-2"></i>Complementary Web Tech</span>
+                            </h5>
+                            <div class="d-flex flex-wrap mt-2">
+                                <span class="skill-badge bg-transparent text-muted border-secondary">Java Spring Boot</span>
+                                <span class="skill-badge bg-transparent text-muted border-secondary">React.js</span>
+                                <span class="skill-badge bg-transparent text-muted border-secondary">HTML5 / CSS3 / JS</span>
+                                <span class="skill-badge bg-transparent text-muted border-secondary">RESTful APIs</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6" data-aos="fade-left">
+                    <div class="custom-card d-flex flex-column h-100">
+                        <h4 class="mb-4 text-primary">
+                            <span class="lang-vi"><i class="fas fa-user-cog me-2"></i>Quản Lý Vận Hành & Kỹ Năng Mềm</span>
+                            <span class="lang-en"><i class="fas fa-user-cog me-2"></i>Operations & Soft Skills</span>
+                        </h4>
+
+                        <div class="mb-4">
+                            <h5 class="text-secondary fw-bold" style="font-size: 1.05rem;">
+                                <span class="lang-vi">Quản Lý Vận Hành & Khách Hàng / Đối Tác</span>
+                                <span class="lang-en">Operational & Vendor Management</span>
+                            </h5>
+                            <ul class="list-unstyled mt-3">
+                                <li class="mb-3 d-flex align-items-start">
+                                    <i class="fas fa-handshake text-primary me-2 mt-1"></i>
+                                    <div>
+                                        <strong><span class="lang-vi">Làm việc với nhà cung ứng:</span><span class="lang-en">Vendor Management:</span></strong>
+                                        <span class="lang-vi">Đầu mối kỹ thuật đàm phán điều khoản, tối ưu hóa chi phí hợp đồng mua sắm thiết bị, phần cứng, phần mềm và dịch vụ mạng / thuê ngoài (như máy photocopy).</span>
+                                        <span class="lang-en">Prime contact for negotiating contracts, optimizing procurement costs for IT equipment, hardware, software, and leased services.</span>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex align-items-start">
+                                    <i class="fas fa-file-alt text-primary me-2 mt-1"></i>
+                                    <div>
+                                        <strong><span class="lang-vi">Xây dựng quy trình IT:</span><span class="lang-en">IT Standardization:</span></strong>
+                                        <span class="lang-vi">Xây dựng, chuẩn hóa tài liệu hướng dẫn vận hành kỹ thuật (SOP) phục vụ cho các phòng ban, giúp tăng tốc độ tự giải quyết lỗi cơ bản.</span>
+                                        <span class="lang-en">Authoring detailed technical Standard Operating Procedures (SOPs) to enhance user self-service and IT efficiency.</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="mb-2">
+                            <h5 class="text-secondary fw-bold" style="font-size: 1.05rem;">
+                                <span class="lang-vi">Năng Lực Giao Tiếp & Ngôn Ngữ</span>
+                                <span class="lang-en">Communication & Languages</span>
+                            </h5>
+                            <ul class="list-unstyled mt-3">
+                                <li class="mb-3 d-flex align-items-start">
+                                    <i class="fas fa-language text-primary me-2 mt-1"></i>
+                                    <div>
+                                        <strong><span class="lang-vi">Tiếng Anh giao tiếp & công việc:</span><span class="lang-en">Communicative & Work English:</span></strong>
+                                        <span class="lang-vi">Sử dụng tốt trong giao tiếp hằng ngày, hỗ trợ xử lý sự cố trực tiếp cho người dùng (User) và báo cáo công việc định kỳ với cấp trên một cách rõ ràng.</span>
+                                        <span class="lang-en">Effective for daily communication, directly supporting users in troubleshooting, and delivering clear job reports to managers.</span>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex align-items-start">
+                                    <i class="fas fa-chalkboard-teacher text-primary me-2 mt-1"></i>
+                                    <div>
+                                        <strong><span class="lang-vi">Tư duy dịch vụ:</span><span class="lang-en">Service-oriented Mindset:</span></strong>
+                                        <span class="lang-vi">Khả năng diễn giải giải pháp kỹ thuật phức tạp thành ngôn ngữ dễ hiểu, kiên nhẫn hướng dẫn người dùng cuối (End-users).</span>
+                                        <span class="lang-en">Translating complex tech jargon into user-friendly guidance while mentoring end-users with patience.</span>
+                                    </div>
+                                </li>
+                                <li class="mb-3 d-flex align-items-start">
+                                    <i class="fas fa-users-cog text-primary me-2 mt-1"></i>
+                                    <div>
+                                        <strong><span class="lang-vi">Làm việc độc lập & Phối hợp:</span><span class="lang-en">Execution & Collaboration:</span></strong>
+                                        <span class="lang-vi">Giải quyết sự cố độc lập, quyết đoán dưới áp lực thời gian của hệ thống (Downtime) và phối hợp nhóm nhịp nhàng.</span>
+                                        <span class="lang-en">Highly self-driven in critical downtime situations while maintaining seamless team collaboration.</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">
+                <span class="lang-vi">Kinh Nghiệm Làm Việc</span>
+                <span class="lang-en">Professional Work Experience</span>
+            </h2>
+            <div class="row">
+                <div class="col-xl-10 mx-auto">
+                    <div class="timeline">
+
+                        <div class="timeline-item" data-aos="fade-up">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-info">04/2026 – <span class="lang-vi">Hiện tại</span><span class="lang-en">Present</span></div>
+                            <div class="custom-card mt-2 border-primary">
+                                <h4 class="fw-bold text-primary">
+                                    <span class="lang-vi">Kỹ sư IT (Bậc 5-3)</span>
+                                    <span class="lang-en">IT Engineer (Level 5-3)</span>
+                                </h4>
+                                <h5 class="text-muted mb-3">
+                                    <span class="lang-vi">Công ty TNHH Quốc tế GreatJD (Hồ Chí Minh)</span>
+                                    <span class="lang-en">GreatJD International Co., Ltd (Ho Chi Minh City)</span>
+                                </h5>
+                                <ul class="text-muted pl-3">
+                                    <li>
+                                        <span class="lang-vi">Quản trị hệ thống tường lửa <strong>Fortigate</strong> và hạ tầng mạng (LAN/WAN).</span>
+                                        <span class="lang-en">Administered <strong>Fortigate</strong> firewalls and enterprise network infrastructure (LAN/WAN).</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Quản lý định danh, phân quyền thiết bị đầu cuối qua <strong>Active Directory (AD)</strong>.</span>
+                                        <span class="lang-en">Managed identity deployment and endpoint access control via <strong>Active Directory (AD)</strong>.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Cấu hình hệ thống mail doanh nghiệp <strong>Exchange</strong> và gói <strong>Office 2019</strong>.</span>
+                                        <span class="lang-en">Configured <strong>Exchange</strong> corporate email platform and <strong>Office 2019</strong> suites.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Quản lý máy tính văn phòng, camera giám sát và hỗ trợ vận hành hệ thống <strong>ERP</strong>.</span>
+                                        <span class="lang-en">Managed workstation fleets, CCTV, and supported internal <strong>ERP</strong> operations.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Xây dựng, chuẩn hóa quy trình vận hành tiêu chuẩn (<strong>SOP</strong>) hạ tầng IT.</span>
+                                        <span class="lang-en">Authored and standardized IT Standard Operating Procedures (<strong>SOPs</strong>).</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Đầu mối kỹ thuật với nhà cung ứng; đàm phán hợp đồng để tối ưu hóa chi phí IT.</span>
+                                        <span class="lang-en">Acted as primary interface with vendors; negotiated terms to optimize tech costs.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Hỗ trợ setup hạ tầng thiết bị phòng họp và làm báo cáo vận hành định kỳ gửi cấp trên.</span>
+                                        <span class="lang-en">Set up conference room infrastructure and compiled operational reports for management.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-aos="fade-up">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-info">03/2025 – 03/2026</div>
+                            <div class="custom-card mt-2">
+                                <h4 class="fw-bold text-primary">
+                                    <span class="lang-vi">Nhân viên Hỗ trợ kỹ thuật & Helpdesk</span>
+                                    <span class="lang-en">IT Support & Helpdesk Specialist</span>
+                                </h4>
+                                <h5 class="text-muted mb-3">
+                                    <span class="lang-vi">Công ty TNHH MTV Sigma (Tây Ninh)</span>
+                                    <span class="lang-en">Sigma One Member Co., Ltd (Tay Ninh)</span>
+                                </h5>
+                                <ul class="text-muted pl-3">
+                                    <li>
+                                        <span class="lang-vi">Hỗ trợ kỹ thuật phần cứng, Windows cho ~130 user tại Long An và văn phòng TP.HCM (<strong>Workgroup</strong>).</span>
+                                        <span class="lang-en">Provided hardware and Windows OS support for ~130 users across Long An and HCMC offices (<strong>Workgroup</strong>).</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Đóng vai trò kỹ thuật tuyến trên (Tier-2 Helpdesk) hỗ trợ từ xa cho chi nhánh Bến Tre.</span>
+                                        <span class="lang-en">Acted as remote Tier-2 technical support to resolve complex system issues for Ben Tre branch.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Quản trị tập trung tài khoản và phân quyền hòm thư cho 3 chi nhánh trên mail <strong>Zimbra</strong>.</span>
+                                        <span class="lang-en">Centrally managed user accounts and mailbox access privileges for 3 branches on <strong>Zimbra</strong>.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Vận hành máy chấm công, giám sát hệ thống camera và đồng bộ dữ liệu liên chi nhánh.</span>
+                                        <span class="lang-en">Operated time attendance, CCTV networks, and handled real-time cross-branch data sync.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Cài đặt ứng dụng văn phòng, phần mềm kế toán và hỗ trợ vận hành hệ thống <strong>ERP</strong>.</span>
+                                        <span class="lang-en">Installed business applications, accounting software, and supported internal <strong>ERP</strong> systems.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Phối hợp với nhà cung ứng thiết bị và xử lý thủ tục thanh toán thuê máy photocopy.</span>
+                                        <span class="lang-en">Collaborated with IT vendors and processed periodic leased photocopy service payments.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-aos="fade-up">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-info">12/2024 – 02/2025</div>
+                            <div class="custom-card mt-2 border-primary">
+                                <h4 class="fw-bold text-primary">
+                                    <span class="lang-vi">Trưởng nhóm Thực tập sinh IT</span>
+                                    <span class="lang-en">IT Intern Team Lead</span>
+                                </h4>
+                                <h5 class="text-muted mb-3">
+                                    <span class="lang-vi">Alta Software (Cần Thơ)</span>
+                                    <span class="lang-en">Alta Software (Can Tho)</span>
+                                </h5>
+                                <ul class="text-muted pl-3">
+                                    <li>
+                                        <span class="lang-vi">Quản lý, điều phối đội ngũ 20 thực tập sinh triển khai dự án hệ thống <strong>LMS</strong> cho khách hàng.</span>
+                                        <span class="lang-en">Led and coordinated a team of 40 IT interns to deploy digital <strong>LMS</strong> platforms for clients.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Trực tiếp tham gia phát triển mã nguồn và hỗ trợ các Phó nhóm quản lý tiến độ công việc.</span>
+                                        <span class="lang-en">Directly contributed to core development and mentored Deputy Leads to manage work progress.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Hướng dẫn thành viên debug các chức năng khó và trực tiếp xử lý các lỗi ứng dụng phức tạp.</span>
+                                        <span class="lang-en">Guided members in debugging difficult functions and handled complex application bugs.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Cài đặt phần mềm chuyên dụng, khởi tạo và quản lý phân quyền tài khoản người dùng an toàn.</span>
+                                        <span class="lang-en">Installed applications, initialized and managed secure user accounts.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-aos="fade-up">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-info">09/2024 – 12/2024</div>
+                            <div class="custom-card mt-2">
+                                <h4 class="fw-bold text-primary">
+                                    <span class="lang-vi">Trưởng nhóm Thực tập sinh IT</span>
+                                    <span class="lang-en">IT Intern Team Lead</span>
+                                </h4>
+                                <h5 class="text-muted mb-3">
+                                    <span class="lang-vi">Steamzone Mekong (Cần Thơ)</span>
+                                    <span class="lang-en">Steamzone Mekong (Can Tho)</span>
+                                </h5>
+                                <ul class="text-muted pl-3">
+                                    <li>
+                                        <span class="lang-vi">Trưởng nhóm điều phối 7 thực tập sinh; tiếp nhận yêu cầu từ chủ doanh nghiệp để phân công công việc.</span>
+                                        <span class="lang-en">Led a team of 7 interns; received requirements directly from the business owner to delegate tasks.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Đồng hành cùng thành viên lắp đặt, xử lý sự cố thiết bị phần cứng, phần mềm và mạng nội bộ.</span>
+                                        <span class="lang-en">Collaborated with members to install and troubleshoot hardware, software, and local network issues.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Trực tiếp vận hành hạ tầng công nghệ và hỗ trợ kỹ thuật (Trợ giảng công nghệ) tại trung tâm.</span>
+                                        <span class="lang-en">Operated IT infrastructure and provided technical assistance (Tech Teaching Assistant) at the center.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Xây dựng hệ thống tài liệu hướng dẫn kỹ thuật và biên soạn giáo trình dạy học công nghệ.</span>
+                                        <span class="lang-en">Structured technical guidance documentation and compiled technology educational curricula.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-aos="fade-up">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-info">01/2024 – 12/2024</div>
+                            <div class="custom-card mt-2">
+                                <h4 class="fw-bold text-primary">
+                                    <span class="lang-vi">Gia sư Công nghệ & Ngôn ngữ</span>
+                                    <span class="lang-en">Technology & Language Tutor</span>
+                                </h4>
+                                <h5 class="text-muted mb-3">
+                                    <span class="lang-vi">Trường CĐ FPT Polytechnic & Dự án Tự do (Freelance)</span>
+                                    <span class="lang-en">FPT Polytechnic College & Freelance Projects</span>
+                                </h5>
+                                <ul class="text-muted pl-3">
+                                    <li>
+                                        <span class="lang-vi">Hợp tác cùng bộ môn tại FPT Polytechnic bổ trợ kiến thức chuyên ngành IT và Tiếng Anh cho sinh viên khóa dưới có nguy cơ nợ môn.</span>
+                                        <span class="lang-en">Collaborated with FPT Polytechnic departments to tutor IT major knowledge and English for at-risk underclassmen.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Đào tạo kỹ năng Tin học văn phòng (Word, Excel, PowerPoint) ứng dụng thực tế cho người đi làm.</span>
+                                        <span class="lang-en">Delivered practical office productivity training (Word, Excel, PowerPoint) for working professionals.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Giảng dạy tư duy và kiến thức lập trình cơ bản cho đối tượng học sinh.</span>
+                                        <span class="lang-en">Taught foundational programming concepts and logic development skills for students.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="timeline-item" data-aos="fade-up">
+                            <div class="timeline-marker"></div>
+                            <div class="timeline-info">01/2024 – 02/2024</div>
+                            <div class="custom-card mt-2">
+                                <h4 class="fw-bold text-primary">
+                                    <span class="lang-vi">Cộng tác viên Giải pháp An ninh mạng</span>
+                                    <span class="lang-en">Cybersecurity Solutions Collaborator</span>
+                                </h4>
+                                <h5 class="text-muted mb-3">
+                                    <span class="lang-vi">Tập đoàn Công nghiệp – Viễn thông Quân đội Viettel (Cần Thơ)</span>
+                                    <span class="lang-en">Viettel Military Industry and Telecoms Group (Can Tho)</span>
+                                </h5>
+                                <ul class="text-muted pl-3">
+                                    <li>
+                                        <span class="lang-vi">Triển khai cài đặt, cấu hình hệ thống phần mềm bảo mật diệt virus Kaspersky cho tệp khách hàng đối tác.</span>
+                                        <span class="lang-en">Deployed, configured, and optimized Kaspersky endpoint antivirus security software architectures for target clients.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Kiểm tra tính ổn định của phần mềm, tinh chỉnh các quy tắc bảo mật thiết bị đầu cuối cơ bản để bảo vệ dữ liệu.</span>
+                                        <span class="lang-en">Evaluated system performance, streamlined basic host-based defense configurations, and protected local data.</span>
+                                    </li>
+                                    <li>
+                                        <span class="lang-vi">Hỗ trợ khắc phục các lỗ hổng bảo mật ứng dụng và lỗi phần mềm trực tiếp cho người dùng cuối.</span>
+                                        <span class="lang-en">Delivered rapid incident support to fix software conflicts and software system vulnerabilities for end users.</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="awards">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">
+                <span class="lang-vi">Thành Tích & Giải Thưởng</span>
+                <span class="lang-en">Honors & Awards</span>
+            </h2>
+            <div class="row g-4">
+
+                <div class="col-xl-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="custom-card text-center h-100">
+                        <div class="contact-icon-box mx-auto mb-3"><i class="fas fa-user-graduate"></i></div>
+                        <h5 class="fw-bold">
+                            <span class="lang-vi">Top 3 Tốt Nghiệp</span>
+                            <span class="lang-en">Top 3 Graduate</span>
+                        </h5>
+                        <p class="text-muted small mb-0">
+                            <span class="lang-vi">Điểm tốt nghiệp cao nhất chuyên ngành (2025)</span>
+                            <span class="lang-en">Highest graduation GPA in Major (2025)</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="custom-card text-center h-100">
+                        <div class="contact-icon-box mx-auto mb-3"><i class="fas fa-user-graduate"></i></div>
+                        <h5 class="fw-bold">
+                            <span class="lang-vi">Thủ Khoa Tốt Nghiệp</span>
+                            <span class="lang-en">Valedictorian</span>
+                        </h5>
+                        <p class="text-muted small mb-0">
+                            <span class="lang-vi">THPT Nguyễn Minh Quang (2022)</span>
+                            <span class="lang-en">Nguyen Minh Quang High School (2022)</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="custom-card text-center h-100">
+                        <div class="contact-icon-box mx-auto mb-3"><i class="fas fa-lightbulb"></i></div>
+                        <h5 class="fw-bold">
+                            <span class="lang-vi">Giải Ba KHKT Tỉnh (2021)</span>
+                            <span class="lang-en">3rd Prize - Science & Tech (2021)</span>
+                        </h5>
+                        <p class="text-muted small mb-0">
+                            <span class="lang-vi">Cuộc thi Sáng tạo KHKT Hậu Giang (2021)</span>
+                            <span class="lang-en">Hau Giang Science & Tech Contest (2021)</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="custom-card text-center h-100">
+                        <div class="contact-icon-box mx-auto mb-3"><i class="fas fa-rocket"></i></div>
+                        <h5 class="fw-bold">
+                            <span class="lang-vi">Á Quân Olympia</span>
+                            <span class="lang-en">1st Runner-Up</span>
+                        </h5>
+                        <p class="text-muted small mb-0">Road to Olympia FPT Polytechnic (2023)</p>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="custom-card text-center h-100">
+                        <div class="contact-icon-box mx-auto mb-3"><i class="fas fa-certificate"></i></div>
+                        <h5 class="fw-bold">Top Student</h5>
+                        <p class="text-muted small mb-0">Học kỳ Fall 2022</p>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="600">
+                    <div class="custom-card text-center h-100">
+                        <div class="contact-icon-box mx-auto mb-3"><i class="fas fa-certificate"></i></div>
+                        <h5 class="fw-bold">Top Student</h5>
+                        <p class="text-muted small mb-0">Học kỳ Summer 2023</p>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="700">
+                    <div class="custom-card text-center h-100">
+                        <div class="contact-icon-box mx-auto mb-3"><i class="fas fa-certificate"></i></div>
+                        <h5 class="fw-bold">Top Student</h5>
+                        <p class="text-muted small mb-0">Học kỳ Spring 2024</p>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-md-4 col-sm-6" data-aos="zoom-in" data-aos-delay="800">
+                    <div class="custom-card text-center h-100">
+                        <div class="contact-icon-box mx-auto mb-3"><i class="fas fa-laptop-code"></i></div>
+                        <h5 class="fw-bold">
+                            <span class="lang-vi">Giải KK Tin Học Trẻ</span>
+                            <span class="lang-en">Consolation Prize</span>
+                        </h5>
+                        <p class="text-muted small mb-0">
+                            <span class="lang-vi">Hội thi Tin học trẻ TP. Ngã Bảy</span>
+                            <span class="lang-en">Nga Bay City Youth Informatics Contest</span>
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" style="background: rgba(13, 110, 253, 0.02)">
+        <div class="container">
+            <h2 class="section-title" data-aos="fade-up">
+                <span class="lang-vi">Thông Tin Liên Hệ</span>
+                <span class="lang-en">Contact Connection</span>
+            </h2>
+            <div class="row g-4">
+                <div class="col-md-6" data-aos="fade-right">
+                    <h4 class="mb-4">
+                        <span class="lang-vi">Sẵn sàng kết nối cho các cơ hội đột phá</span>
+                        <span class="lang-en">Let's craft something magnificent together</span>
+                    </h4>
+                    <p class="text-muted mb-4">
+                        <span class="lang-vi">Nếu bạn đang tìm kiếm một nhân sự IT tận tâm, tư duy logic cao, năng động và quyết liệt để quản trị hạ tầng hệ thống của bạn, hãy liên hệ với tôi qua bất kỳ kênh nào.</span>
+                        <span class="lang-en">If you're looking for a highly dedicated, system-driven, and proactive IT professional to manage and support your technical pipelines, connect with me immediately.</span>
+                    </p>
+
+                    <div class="custom-card-1 mb-3 p-3">
+                        <div class="d-flex align-items-center">
+                            <div class="contact-icon-box"><i class="fas fa-phone-alt"></i></div>
+                            <div>
+                                <h6 class="mb-0 text-muted"><span class="lang-vi">Điện thoại</span><span class="lang-en">Phone Number</span></h6>
+                                <span class="fw-bold">078 78 33 283</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="custom-card-1 mb-3 p-3">
+                        <div class="d-flex align-items-center">
+                            <div class="contact-icon-box"><i class="fas fa-envelope"></i></div>
+                            <div>
+                                <h6 class="mb-0 text-muted"><span class="lang-vi">Hộp thư điện tử</span><span class="lang-en">Email Address</span></h6>
+                                <span class="fw-bold">lytinhnhiem@gmail.com</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="custom-card-1 mb-3 p-3">
+                        <div class="d-flex align-items-center">
+                            <div class="contact-icon-box"><i class="fas fa-map-marker-alt"></i></div>
+                            <div>
+                                <h6 class="mb-0 text-muted"><span class="lang-vi">Địa điểm làm việc</span><span class="lang-en">Primary Location</span></h6>
+                                <span class="fw-bold">TP. Hồ Chí Minh, Việt Nam</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6" data-aos="fade-left">
+                    <div class="custom-card d-flex flex-column justify-content-center h-100">
+                        <h4 class="mb-4">
+                            <span class="lang-vi">Kết nối trực tuyến nhanh</span>
+                            <span class="lang-en">Instant Digital Channels</span>
+                        </h4>
+                        <p class="text-muted mb-4">
+                            <span class="lang-vi">Vui lòng bấm chọn các kênh liên lạc tiện lợi nhất bên dưới để trò chuyện, trao đổi công việc trực tiếp với tôi.</span>
+                            <span class="lang-en">Click on any of the preferred secure channels below to initiate an instant discussion or review.</span>
+                        </p>
+
+                        <div class="d-flex flex-column gap-3">
+                            <a href="mailto:lytinhnhiem@gmail.com" class="btn btn-custom btn-gradient text-center py-3 w-100 d-flex align-items-center justify-content-center gap-3">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>
+                                    <span class="lang-vi">Gửi Email Trực Tiếp</span>
+                                    <span class="lang-en">Send Direct Email</span>
+                                </span>
+                            </a>
+
+                            <a href="https://zalo.me/0787833283" target="_blank" class="btn btn-custom btn-outline-custom text-center py-3 w-100 d-flex align-items-center justify-content-center gap-3">
+                                <i class="comment-icon fas fa-comment-dots"></i>
+                                <span>
+                                    <span class="lang-vi">Trò Chuyện Qua Zalo</span>
+                                    <span class="lang-en">Connect via Zalo</span>
+                                </span>
+                            </a>
+
+                            <a href="https://facebook.com/yourprofile" target="_blank" class="btn btn-custom btn-outline-custom text-center py-3 w-100 d-flex align-items-center justify-content-center gap-3">
+                                <i class="fab fa-facebook-f"></i>
+                                <span>
+                                    <span class="lang-vi">Liên Hệ Qua Facebook</span>
+                                    <span class="lang-en">Connect via Facebook</span>
+                                </span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="text-center py-4 border-top border-secondary" style="background-color: var(--dark-bg);">
+        <p class="mb-0 text-muted small">
+            &copy; 2026 Trust Lee - Lý Tính Nhiệm.
+            <span class="lang-vi">Được xây dựng bởi niềm đam mê và nhiều cốc coffee.</span>
+            <span class="lang-en">Built with pure passion and plenty of coffee cups.</span>
+        </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+
+    <script>
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => preloader.style.visibility = 'hidden', 500);
+        });
+
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+
+        const themeToggleBtn = document.getElementById('themeToggle');
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const targetTheme = currentTheme === 'light' ? 'dark' : 'light';
+            document.documentElement.setAttribute('data-theme', targetTheme);
+            themeToggleBtn.innerHTML = targetTheme === 'light' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        });
+
+        let currentLang = 'vi';
+        const langToggleBtn = document.getElementById('langToggle');
+        const viElements = document.querySelectorAll('.lang-vi');
+        const enElements = document.querySelectorAll('.lang-en');
+        let typedInstance = null;
+
+        const typedStrings = {
+            vi: ['Kỹ sư Hỗ trợ IT^1000', 'Chuyên viên Hệ thống Helpdesk^1000', 'Quản trị viên Mạng Tương lai^1000'],
+            en: ['IT Support Specialist^1000', 'Systems Helpdesk^1000', 'Future Network Administrator^1000']
+        };
+
+        function initTypedEffect() {
+            if (typedInstance) {
+                typedInstance.destroy();
+            }
+            typedInstance = new Typed('.hero-subtitle-typed', {
+                strings: typedStrings[currentLang],
+                typeSpeed: 60,
+                backSpeed: 40,
+                loop: true
+            });
+        }
+
+        function updateLanguageDisplay() {
+            if (currentLang === 'vi') {
+                viElements.forEach(el => el.style.display = 'inline-block');
+                enElements.forEach(el => el.style.display = 'none');
+                langToggleBtn.innerHTML = '<span style="font-weight: bold; font-size: 0.85rem;">EN</span>';
+            } else {
+                viElements.forEach(el => el.style.display = 'none');
+                enElements.forEach(el => el.style.display = 'inline-block');
+                langToggleBtn.innerHTML = '<span style="font-weight: bold; font-size: 0.85rem;">VI</span>';
+            }
+            initTypedEffect();
+        }
+
+        updateLanguageDisplay();
+
+        langToggleBtn.addEventListener('click', () => {
+            currentLang = currentLang === 'vi' ? 'en' : 'vi';
+            updateLanguageDisplay();
+        });
+    </script>
+</body>
+
+</html>
